@@ -5,6 +5,7 @@ BLEService ledService("19B10000-E8F2-537E-4F6C-D104768A1214");  // Bluetooth® L
 // Bluetooth® Low Energy LED Switch Characteristic - custom 128-bit UUID, read and writable by central
 BLEByteCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1214", BLERead | BLEWrite);
 
+//Set up led pin values
 const int blue = 2;
 const int green = 3;
 const int yellow = 4;
@@ -66,7 +67,8 @@ void loop() {
       if (switchCharacteristic.written()) {
         int distance = switchCharacteristic.value();
         Serial.println(distance);
-        
+
+        //If less or equal to 15cm away
         if (distance <= 15) 
         {
           digitalWrite(blue, LOW);
@@ -74,6 +76,7 @@ void loop() {
           digitalWrite(yellow, LOW);
           digitalWrite(red, HIGH);
         } 
+        //If more than 15cm away but less or equal to 30 cm away
         else if (distance <= 30) 
         {
           digitalWrite(blue, LOW);
@@ -81,6 +84,7 @@ void loop() {
           digitalWrite(yellow, HIGH);
           digitalWrite(red, LOW);
         } 
+        //If more than 30cm away but less or equal to 60 cm away
         else if (distance <= 60) 
         {
           digitalWrite(blue, LOW);
@@ -88,6 +92,7 @@ void loop() {
           digitalWrite(yellow, LOW);
           digitalWrite(red, LOW);
         } 
+        //If more than 60cm away
         else 
         {
           digitalWrite(blue, HIGH);
